@@ -3,6 +3,8 @@ import {
     Td,
   } from '@chakra-ui/react'
 
+import { BsSend } from 'react-icons/bs';
+
 function BookRow({ Book }) {
     <span style={{ color: 'red' }}>
       {Book.name}
@@ -18,6 +20,11 @@ function BookRow({ Book }) {
       <Td>{Book.Language}</Td>
       <Td>{Book.Size}</Td>
       <Td>{Book.Extension}</Td>
+      <Td>
+        <button onClick={() => handleSend(Book.id)}>
+          <BsSend />
+        </button>
+      </Td>
     </Tr>
   );
 }
