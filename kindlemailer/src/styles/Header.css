@@ -1,4 +1,7 @@
-.header-text {
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin: 40px;
     margin-top: 20px;
 }
