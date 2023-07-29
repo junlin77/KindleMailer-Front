@@ -1,11 +1,6 @@
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.header-text {
+    margin: 40px;
     margin-top: 20px;
-    margin-left: 40px;
-    margin-right: 40px;
-    color: #fff;
 }
 
 .header-text h5 {

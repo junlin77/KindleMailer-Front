@@ -1,4 +1,5 @@
 import {
+    FormControl,
     Input,
     InputGroup,
     InputLeftElement,
@@ -7,10 +8,11 @@ import {
 
 import { BiBook } from 'react-icons/bi';
 import { AiOutlineUser, AiOutlineFile, AiOutlineMail } from 'react-icons/ai';
+import '../styles/SearchBar.css';
 
 function SearchBar() {
     return (
-        <form>
+        <FormControl className='form'>
         <Stack spacing={3} direction="row" align="center">
             <InputGroup>
                 <InputLeftElement pointerEvents="none">
@@ -37,7 +39,7 @@ function SearchBar() {
                 <Input variant="outline" type="text" placeholder="Email"/>
             </InputGroup>
         </Stack>
-        </form>
+        </FormControl>
     );
 }
 
