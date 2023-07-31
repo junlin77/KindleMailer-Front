@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   FormControl,
   Input,
@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { BiBook } from 'react-icons/bi';
 import { AiOutlineUser, AiOutlineFile, AiOutlineMail } from 'react-icons/ai';
-import axios from 'axios'; // Import Axios for API requests
+import axios from 'axios';
 import '../styles/SearchBar.css';
 
 function SearchBar({ setSearchResults }) {
@@ -17,9 +17,8 @@ function SearchBar({ setSearchResults }) {
   const [extension, setExtension] = useState('');
   const [email, setEmail] = useState('');
 
-  const handleSearch = () => {
-    // Perform the API GET request here
-    const apiUrl = `http://127.0.0.1:7000/api/search/?`; // Replace with your actual API endpoint URL
+  useEffect(() => {
+    const apiUrl = `http://127.0.0.1:7000/api/search/?`; 
 
     axios
       .get(apiUrl, {
@@ -38,7 +37,7 @@ function SearchBar({ setSearchResults }) {
         // Handle errors here if needed
         console.error('Error fetching data:', error);
       });
-  };
+  }, [title, author, extension, email]); // The API request will be triggered whenever any of these variables change
 
   return (
     <FormControl className='form'>
@@ -91,11 +90,9 @@ function SearchBar({ setSearchResults }) {
             onChange={(e) => setEmail(e.target.value)}
           />
         </InputGroup>
-        <button onClick={handleSearch}>Search</button>
       </Stack>
     </FormControl>
   );
 }
 
 export default SearchBar;
-
