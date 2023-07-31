@@ -13,31 +13,27 @@ function BookTable({ Books }) {
   
     Books.forEach((Book) => {
       rows.push(
-        <BookRow
-          Book={Book}
-          key={Book.name} />
+        <BookRow Book={Book} />
       );
     });
   
     return (
-      <TableContainer>
-        <Table variant="simple" colorScheme="light-grey">
-          <Thead>
-            <Tr>
-                <Th>Author</Th>
-                <Th>Title</Th>
-                <Th>Publisher</Th>
-                <Th>Year</Th>
-                <Th>Pages</Th>
-                <Th>Language</Th>
-                <Th>Size</Th>
-                <Th>Extension</Th>
-                <Th></Th>
-            </Tr>
-          </Thead>
-          <Tbody>{rows}</Tbody>
-        </Table>
-      </TableContainer>
+      <Table variant="simple" colorScheme="light-grey">
+        <Thead>
+          <Tr>
+              <Th>Author</Th>
+              <Th>Title</Th>
+              <Th>Publisher</Th>
+              <Th>Year</Th>
+              <Th>Pages</Th>
+              <Th>Language</Th>
+              <Th>Size</Th>
+              <Th>Extension</Th>
+              <Th></Th>
+          </Tr>
+        </Thead>
+        <Tbody>{rows}</Tbody>
+      </Table>
     );
   }
 
