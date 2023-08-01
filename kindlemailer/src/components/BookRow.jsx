@@ -3,12 +3,12 @@ import axios from 'axios';
 import { Tr, Td } from '@chakra-ui/react';
 import { BsSend } from 'react-icons/bs';
 
-function BookRow({ Book }) {
+function BookRow({ Book, email }) {
   const handleSend = (Book) => {
-    const apiUrl = `http://127.0.0.1:7000/api/send_to_kindle/`;
+    const apiUrl = `http://127.0.0.1:8000/api/send_to_kindle/`;
     const data = {
       book_to_download: Book,
-      kindle_email: 'test@kindle.com'
+      kindle_email: email,
     }
 
     axios
@@ -18,7 +18,6 @@ function BookRow({ Book }) {
         console.log('POST request successful:', response);
       })
       .catch((error) => {
-        // Handle errors here if needed
         console.error('Error sending data:', error);
       });
   };

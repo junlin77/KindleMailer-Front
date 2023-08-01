@@ -7,12 +7,12 @@ import {
     Th,
   } from '@chakra-ui/react'
 
-function BookTable({ Books }) {
+function BookTable({ Books, email }) {
     const rows = [];
   
     Books.forEach((Book) => {
       rows.push(
-        <BookRow Book={Book} />
+        <BookRow Book={Book} email={email} />
       );
     });
   

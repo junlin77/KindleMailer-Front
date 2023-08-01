@@ -5,11 +5,12 @@ import '../styles/FilterableBookTable.css';
 
 function FilterableBookTable() {
   const [searchResults, setSearchResults] = useState([]);
+  const [email, setEmail] = useState('');
 
   return (
     <div className='body'>
-      <SearchBar setSearchResults={setSearchResults} />
-      <BookTable Books={searchResults} />
+      <SearchBar setSearchResults={setSearchResults} setEmail={setEmail} /> 
+      <BookTable Books={searchResults} email={email} /> {/* Pass searchResults and email state to BookTable component */}
     </div>
   );
 }
