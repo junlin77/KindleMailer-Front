@@ -57,7 +57,6 @@ function BookRow({ Book, email }) {
       <Td>{Book.Title}</Td>
       <Td>{Book.Publisher}</Td>
       <Td>{Book.Year}</Td>
-      <Td>{Book.Pages}</Td>
       <Td>{Book.Language}</Td>
       <Td>{Book.Size}</Td>
       <Td>{Book.Extension}</Td>
