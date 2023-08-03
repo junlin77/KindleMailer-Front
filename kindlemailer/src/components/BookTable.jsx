@@ -5,7 +5,9 @@ import {
     Tbody,
     Tr,
     Th,
+    Td, 
   } from '@chakra-ui/react'
+import '../styles/BookTable.css';
 
 function BookTable({ Books, email }) {
     const rows = [];
@@ -30,7 +32,17 @@ function BookTable({ Books, email }) {
               <Th></Th>
           </Tr>
         </Thead>
-        <Tbody>{rows}</Tbody>
+        <Tbody className='table-body'>
+          {Books.length === 0 ? (
+            <Tr className='no-data-row'>
+              <Td colSpan='8' textAlign='center'>No data</Td>
+            </Tr>
+          ) : (
+            Books.map((Book) => (
+              <BookRow Book={Book} email={email} />
+            ))
+          )}
+        </Tbody>
       </Table>
     );
   }
