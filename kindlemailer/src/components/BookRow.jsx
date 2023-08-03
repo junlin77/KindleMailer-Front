@@ -4,23 +4,13 @@ import {
   Tr,
   Td,
   Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  Alert,
-  AlertIcon,
-  Box,
   Spinner,
   Flex,
 } from '@chakra-ui/react';
 import { BsSend } from 'react-icons/bs';
+import Swal from 'sweetalert2';
 
 function BookRow({ Book, email }) {
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [showErrorModal, setShowErrorModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSend = (Book) => {
@@ -37,18 +27,27 @@ function BookRow({ Book, email }) {
         // The POST request is successful, show the success modal
         console.log('POST request successful:', response);
         setIsLoading(false);
-        setShowSuccessModal(true);
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Sent to: ' + email,
+        });
       })
       .catch((error) => {
-        console.error('Error sending data:', error);
         setIsLoading(false);
-        setShowErrorModal(true);
+        let text = 'Error sending data. Please try again later.';
+        if (error.response && error.response.status === 400) {
+          console.error("Error:", error.response.data.error);
+          text = error.response.data.error;
+        } else {
+          console.error('Error sending data:', error);
+        }
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: text,
+        });
       });
-  };
-
-  const handleCloseModal = () => {
-    setShowSuccessModal(false);
-    setShowErrorModal(false);
   };
 
   return (
@@ -70,40 +69,6 @@ function BookRow({ Book, email }) {
             <BsSend />
           </Button>
         )}
-
-        {/* Success Modal */}
-        <Modal isOpen={showSuccessModal} onClose={handleCloseModal}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Success</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Box mb={2}>
-                <Alert status="success" variant="subtle" flexDirection="column" alignItems="center" justifyContent="center" textAlign="center" height="50px">
-                  <AlertIcon />
-                  Sent to Kindle!
-                </Alert>
-              </Box>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
-
-        {/* Error Modal */}
-        <Modal isOpen={showErrorModal} onClose={handleCloseModal}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Error</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Box mb={2}>
-                <Alert status="error" variant="subtle" flexDirection="column" alignItems="center" justifyContent="center" textAlign="center" height="50px">
-                  <AlertIcon />
-                  Error sending data. Please try again later.
-                </Alert>
-              </Box>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
       </Td>
     </Tr>
   );

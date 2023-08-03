@@ -4,10 +4,11 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  InputRightElement,
   Stack,
 } from '@chakra-ui/react';
 import { BiBook } from 'react-icons/bi';
-import { AiOutlineUser, AiOutlineFile, AiOutlineMail } from 'react-icons/ai';
+import { AiOutlineCloseCircle, AiOutlineUser, AiOutlineFile, AiOutlineMail } from 'react-icons/ai';
 import axios from 'axios';
 import '../styles/SearchBar.css';
 
@@ -15,11 +16,35 @@ function SearchBar({ setSearchResults, setEmail }) {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [extension, setExtension] = useState('');
+  
+  const [showTitleClearIcon, setShowTitleClearIcon] = useState(false);
+  const [showAuthorClearIcon, setShowAuthorClearIcon] = useState(false);
+  const [showExtensionClearIcon, setShowExtensionClearIcon] = useState(false);
 
   // Update email state in parent - FilterableBookTable component
   const handleEmailChange = (event) => {
     const emailValue = event.target.value;
     setEmail(emailValue);
+  };
+
+  // Clear input field and hide clear icon
+  const handleClear = (field) => {
+    switch (field) {
+      case 'title':
+        setTitle('');
+        setShowTitleClearIcon(false);
+        break;
+      case 'author':
+        setAuthor('');
+        setShowAuthorClearIcon(false);
+        break;
+      case 'extension':
+        setExtension('');
+        setShowExtensionClearIcon(false);
+        break;
+      default:
+        break;
+    }
   };
 
   useEffect(() => {
@@ -54,8 +79,16 @@ function SearchBar({ setSearchResults, setEmail }) {
             type='text'
             placeholder='Title'
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              setShowTitleClearIcon(!!e.target.value);
+            }}
           />
+          {showTitleClearIcon && (
+            <InputRightElement onClick={() => handleClear('title')}>
+              <AiOutlineCloseCircle />
+            </InputRightElement>
+          )}
         </InputGroup>
         <InputGroup>
           <InputLeftElement pointerEvents='none'>
@@ -66,8 +99,16 @@ function SearchBar({ setSearchResults, setEmail }) {
             type='text'
             placeholder='Author'
             value={author}
-            onChange={(e) => setAuthor(e.target.value)}
+            onChange={(e) => {
+              setAuthor(e.target.value)
+              setShowAuthorClearIcon(!!e.target.value);
+            }}
           />
+          {showAuthorClearIcon && (
+            <InputRightElement onClick={() => handleClear('author')}>
+              <AiOutlineCloseCircle />
+            </InputRightElement>
+          )}
         </InputGroup>
         <InputGroup>
           <InputLeftElement pointerEvents='none'>
@@ -78,8 +119,16 @@ function SearchBar({ setSearchResults, setEmail }) {
             type='text'
             placeholder='Extension'
             value={extension}
-            onChange={(e) => setExtension(e.target.value)}
+            onChange={(e) => {
+              setExtension(e.target.value)
+              setShowExtensionClearIcon(!!e.target.value);
+            }}
           />
+          {showExtensionClearIcon && (
+            <InputRightElement onClick={() => handleClear('extension')}>
+              <AiOutlineCloseCircle />
+            </InputRightElement>
+          )}
         </InputGroup>
         <InputGroup>
           <InputLeftElement pointerEvents='none'>
