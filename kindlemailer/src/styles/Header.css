@@ -13,3 +13,10 @@
 .header-text p {
     font-size: small;
 }
+
+.header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+}
