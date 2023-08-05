@@ -2,12 +2,26 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { Button } from '@chakra-ui/react';
 import '../styles/Header.css';
 import DarkModeToggle from './DarkModeToggle'; 
+import axios from 'axios';
 
 const Header = () => {
   const login = useGoogleLogin({
-    onSuccess: (codeResponse) => setUser(codeResponse),
-    onError: (error) => console.log('Login Failed:', error)
+    onSuccess: tokenResponse => {
+      console.log(tokenResponse),
+      sendTokenToBackend(tokenResponse.access_token);
+    },
+    onError: (error) => console.log('Login Failed:', error),
   });
+
+  const sendTokenToBackend = async (access_token) => {
+    try {
+      // Send the access token to your Django backend
+      const response = await axios.post('http://127.0.0.1:8000/api/login/', { access_token });
+      console.log('Backend response:', response.data);
+    } catch (error) {
+      console.error('Error sending token:', error);
+    }
+  };
   
   return (
     <div className="header">

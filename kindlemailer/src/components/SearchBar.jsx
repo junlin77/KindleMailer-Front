@@ -137,7 +137,7 @@ function SearchBar({ setSearchResults, setEmail }) {
           <Input
             variant='outline'
             type='text'
-            placeholder='Email'
+            placeholder='Your Kindle Email'
             onChange={handleEmailChange}
           />
         </InputGroup>
