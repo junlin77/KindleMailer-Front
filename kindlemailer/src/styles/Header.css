@@ -20,3 +20,10 @@
     align-items: center;
     gap: 5px;
 }
+
+.profile-picture {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}

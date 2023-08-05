@@ -30,7 +30,7 @@ function BookRow({ Book, email }) {
         Swal.fire({
           icon: 'success',
           title: 'Success',
-          text: 'Sent to: ' + email,
+          text: '\'' + Book.Title + '\'' + ' sent to ' + '\'' + email + '\'',
         });
       })
       .catch((error) => {
