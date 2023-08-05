@@ -4,10 +4,10 @@ import { Button } from '@chakra-ui/react';
 import '../styles/Header.css';
 import DarkModeToggle from './DarkModeToggle';
 import axios from 'axios';
+import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 
 const Header = () => {
   const [userProfile, setUserProfile] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const login = useGoogleLogin({
     onSuccess: tokenResponse => {
@@ -33,14 +33,6 @@ const Header = () => {
     setIsModalOpen(false);
   };
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-  
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };  
-
   return (
     <div className="header">
       <div className="header-text">
@@ -48,31 +40,29 @@ const Header = () => {
         <p>Send books to your Kindle with ease.</p>
       </div>
       <div className="header-controls">
+        <DarkModeToggle />
         {userProfile ? (
           <div className="user-profile">
-          <img
-            src={userProfile.profile_picture}
-            alt="Profile"
-            className="profile-picture"
-            onClick={openModal} // Open the modal when profile picture is clicked
-          />
-        </div>
+            <Menu>
+              <MenuButton as={Button} variant={'link'}>
+                <img
+                  src={userProfile.profile_picture}
+                  alt="Profile"
+                  className="profile-picture"
+                />
+              </MenuButton>
+              <MenuList>
+                <MenuItem>📩 Set Kindle Email</MenuItem>
+                <MenuItem onClick={logOut}>👋 Log out</MenuItem>
+              </MenuList>
+            </Menu>
+          </div>
         ) : (
           <Button variant='ghost' onClick={login} className="header-button">
             Sign in with Google 🚀
           </Button>
         )}
-        <DarkModeToggle />
       </div>
-      {isModalOpen && ( // Display the modal if isModalOpen is true
-        <div className="modal">
-          <div className="modal-content">
-            <p>Do you want to log out?</p>
-            <Button variant='ghost' onClick={logOut}>Log Out 👋</Button>
-            <Button variant='ghost' onClick={closeModal}>Cancel</Button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

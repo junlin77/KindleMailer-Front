@@ -16,9 +16,13 @@
 
 .header-controls {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
+}
+
+.user-profile {
+    display: flex;
+    align-self: center;
 }
 
 .profile-picture {
