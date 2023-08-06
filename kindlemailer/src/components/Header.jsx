@@ -27,6 +27,8 @@ const Header = ({ userProfile, setUserProfile }) => {
       console.log('Backend response:', response.data);
       setUserProfile(response.data);
       setKindleEmail(response.data.kindle_email);
+      // Save the userProfile in localStorage
+      localStorage.setItem('userProfile', JSON.stringify(response.data));
     } catch (error) {
       console.error('Error sending token:', error);
     }
@@ -54,6 +56,7 @@ const Header = ({ userProfile, setUserProfile }) => {
   const logOut = () => {
     googleLogout();
     setUserProfile(null);
+    localStorage.clear();
   };
 
   const openModal = () => {
