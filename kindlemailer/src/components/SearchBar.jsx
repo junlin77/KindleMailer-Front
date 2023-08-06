@@ -5,21 +5,29 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
-  Stack,
+  Grid,
 } from '@chakra-ui/react';
 import { BiBook } from 'react-icons/bi';
 import { AiOutlineCloseCircle, AiOutlineUser, AiOutlineFile, AiOutlineMail } from 'react-icons/ai';
+import { TbBuilding, TbLanguageKatakana } from 'react-icons/tb';
+import { SlCalender } from 'react-icons/sl';
 import axios from 'axios';
 import '../styles/SearchBar.css';
 
-function SearchBar({ setSearchResults, setEmail }) {
+function SearchBar({ setSearchResults, setEmail, userProfile }) {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [extension, setExtension] = useState('');
+  const [publisher, setPublisher] = useState('');
+  const [year, setYear] = useState('');
+  const [language, setLanguage] = useState('');
   
   const [showTitleClearIcon, setShowTitleClearIcon] = useState(false);
   const [showAuthorClearIcon, setShowAuthorClearIcon] = useState(false);
   const [showExtensionClearIcon, setShowExtensionClearIcon] = useState(false);
+  const [showPublisherClearIcon, setShowPublisherClearIcon] = useState(false);
+  const [showYearClearIcon, setShowYearClearIcon] = useState(false);
+  const [showLanguageClearIcon, setShowLanguageClearIcon] = useState(false);
 
   // Update email state in parent - FilterableBookTable component
   const handleEmailChange = (event) => {
@@ -42,6 +50,18 @@ function SearchBar({ setSearchResults, setEmail }) {
         setExtension('');
         setShowExtensionClearIcon(false);
         break;
+      case 'publisher':
+        setPublisher('');
+        setShowPublisherClearIcon(false);
+        break;
+      case 'year':
+        setYear('');
+        setShowYearClearIcon(false);
+        break;
+      case 'language':
+        setLanguage('');
+        setShowLanguageClearIcon(false);
+        break;
       default:
         break;
     }
@@ -56,6 +76,9 @@ function SearchBar({ setSearchResults, setEmail }) {
           title,
           author,
           extension,
+          publisher,
+          year,
+          language,
         },
       })
       .then((response) => {
@@ -65,11 +88,16 @@ function SearchBar({ setSearchResults, setEmail }) {
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-  }, [title, author, extension]); // Trigger API whenever these variables change
+  }, [title, author, extension, publisher, year, language]); // Trigger API whenever these variables change
 
   return (
     <FormControl className='form'>
-      <Stack spacing={3} direction='row' align='center'>
+      <Grid
+        templateColumns={userProfile ? "repeat(3, 1fr)" : "repeat(4, 1fr)"}
+        gap={3}
+        align="center"
+        width = "100%"
+      >
         <InputGroup>
           <InputLeftElement pointerEvents='none'>
             <BiBook />
@@ -130,18 +158,83 @@ function SearchBar({ setSearchResults, setEmail }) {
             </InputRightElement>
           )}
         </InputGroup>
-        <InputGroup>
-          <InputLeftElement pointerEvents='none'>
-            <AiOutlineMail />
-          </InputLeftElement>
-          <Input
-            variant='outline'
-            type='text'
-            placeholder='Your Kindle Email'
-            onChange={handleEmailChange}
-          />
-        </InputGroup>
-      </Stack>
+        {userProfile ? (
+          <>
+            <InputGroup>
+              <InputLeftElement pointerEvents='none'>
+                <TbBuilding />
+              </InputLeftElement>
+              <Input
+                variant='outline'
+                type='text'
+                placeholder='Publisher'
+                value={publisher}
+                onChange={(e) => {
+                  setPublisher(e.target.value);
+                  setShowPublisherClearIcon(!!e.target.value);
+                }}
+              />
+              {showPublisherClearIcon && (
+                <InputRightElement onClick={() => handleClear('publisher')}>
+                  <AiOutlineCloseCircle />
+                </InputRightElement>
+              )}
+            </InputGroup>
+            <InputGroup>
+              <InputLeftElement pointerEvents='none'>
+                <SlCalender />
+              </InputLeftElement>
+              <Input
+                variant='outline'
+                type='text'
+                placeholder='Year'
+                value={year}
+                onChange={(e) => {
+                  setYear(e.target.value);
+                  setShowYearClearIcon(!!e.target.value);
+                }}
+              />
+              {showYearClearIcon && (
+                <InputRightElement onClick={() => handleClear('year')}>
+                  <AiOutlineCloseCircle />
+                </InputRightElement>
+              )}
+            </InputGroup>
+            <InputGroup>
+              <InputLeftElement pointerEvents='none'>
+                <TbLanguageKatakana />
+              </InputLeftElement>
+              <Input
+                variant='outline'
+                type='text'
+                placeholder='Language'
+                value={language}
+                onChange={(e) => {
+                  setLanguage(e.target.value);
+                  setShowLanguageClearIcon(!!e.target.value);
+                }}
+              />
+              {showLanguageClearIcon && (
+                <InputRightElement onClick={() => handleClear('language')}>
+                  <AiOutlineCloseCircle />
+                </InputRightElement>
+              )}
+            </InputGroup>
+          </>
+        ) : (
+          <InputGroup>
+            <InputLeftElement pointerEvents='none'>
+              <AiOutlineMail />
+            </InputLeftElement>
+            <Input
+              variant='outline'
+              type='text'
+              placeholder='Your Kindle Email'
+              onChange={handleEmailChange}
+            />
+          </InputGroup>
+        )}
+      </Grid>
     </FormControl>
   );
 }

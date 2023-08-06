@@ -8,8 +8,7 @@ import { Menu, MenuButton, MenuList, MenuItem, Input, FormControl, FormLabel, Fo
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import Swal from 'sweetalert2';
 
-const Header = () => {
-  const [userProfile, setUserProfile] = useState(null);
+const Header = ({ userProfile, setUserProfile }) => {
   const [isModalOpen, setIsModalOpen] = useState(false); 
   const [kindleEmail, setKindleEmail] = useState('');
   const [currentKindleEmail, setCurrentKindleEmail] = useState('');
