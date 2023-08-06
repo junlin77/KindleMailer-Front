@@ -86,6 +86,10 @@ const Header = ({ userProfile, setUserProfile }) => {
       console.log('Kindle email set:', response.data);
       closeModal();
 
+      // Update the userProfile state after setting new email
+      const newUserProfile = { ...userProfile, kindle_email: kindleEmail };
+      setUserProfile(newUserProfile);
+
       Swal.fire({
         icon: 'success',
         title: 'Success',
@@ -107,7 +111,7 @@ const Header = ({ userProfile, setUserProfile }) => {
   return (
     <div className="header">
       <div className="header-text">
-        <h5>KindleMailer</h5>
+        <h5>KindleMailer 📖</h5>
         <p>Send books to your Kindle with ease.</p>
       </div>
       <div className="header-controls">

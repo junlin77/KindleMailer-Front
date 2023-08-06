@@ -10,7 +10,7 @@ const FilterableBookTable = ({ userProfile }) => {
   return (
     <div className='body'>
       <SearchBar setSearchResults={setSearchResults} setEmail={setEmail} userProfile={userProfile} /> 
-      <BookTable Books={searchResults} email={email} /> {/* Pass searchResults and email state to BookTable component */}
+      <BookTable Books={searchResults} email={userProfile ? userProfile.kindle_email : email} /> {/* if logged in, use kindle email in userProfile */}
     </div>
   );
 }
