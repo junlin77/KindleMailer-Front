@@ -31,3 +31,22 @@
     border-radius: 50%;
     object-fit: cover;
 }
+
+.profile-icon-container {
+    display: flex;
+    align-items: center;
+}
+
+.profile-picture {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 5px; 
+}
+
+.chevron-icon {
+    font-size: 16px; 
+}
+  
+  
