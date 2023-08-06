@@ -4,7 +4,7 @@ import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, Moda
 import '../styles/Header.css';
 import DarkModeToggle from './DarkModeToggle';
 import axios from 'axios';
-import { Menu, MenuButton, MenuList, MenuItem, Input, FormControl, FormLabel } from '@chakra-ui/react';
+import { Menu, MenuButton, MenuList, MenuItem, Input, FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import Swal from 'sweetalert2';
 
@@ -65,7 +65,17 @@ const Header = () => {
     setIsModalOpen(false);
   };
 
+  const isValidEmail = (email) => {
+    // Regular expression for email validation
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(email) || email === '';
+  };  
+
   const setKindleEmailBackend = async () => {
+    if (!isValidEmail(kindleEmail) || kindleEmail === currentKindleEmail || kindleEmail === '') {
+      return;
+    }
+
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/set_kindle_email/', {
         user_id: userProfile.user_id, 
@@ -133,18 +143,21 @@ const Header = () => {
                   isReadOnly
                 />
               </FormControl>
-            )}
-
-              <FormControl mt={4}>
-              <FormLabel>
-                {currentKindleEmail === ''
-                  ? "Configure your Kindle Email address"
-                  : "New address"}
-              </FormLabel>
+              )}
+              <FormControl isInvalid={!isValidEmail(kindleEmail)} mt={4}>
+                <FormLabel>
+                  {currentKindleEmail === ''
+                    ? "Configure your Kindle Email address"
+                    : "New address"}
+                </FormLabel>
                 <Input
                   placeholder="Enter your new Kindle email"
-                  onChange={(e) => {setKindleEmail(e.target.value)}}
+                  onChange={(e) => setKindleEmail(e.target.value)}
                 />
+                {!isValidEmail(kindleEmail) && (
+                  <FormErrorMessage>Please enter a valid email address.</FormErrorMessage>
+                )}
+
               </FormControl>
               </ModalBody>
               <ModalFooter>
