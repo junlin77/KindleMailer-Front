@@ -3,3 +3,9 @@
     padding: 60px 0; 
     color: #666;
 }
+
+.empty-cell {
+    min-width: 135px; 
+    width: 150px; 
+}
+  
