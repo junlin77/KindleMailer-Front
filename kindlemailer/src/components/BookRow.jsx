@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
   Tr,
@@ -6,12 +6,37 @@ import {
   Button,
   Spinner,
   Flex,
+  Image,
 } from '@chakra-ui/react';
 import { BsSend } from 'react-icons/bs';
 import Swal from 'sweetalert2';
 
 function BookRow({ Book, email }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [coverImage, setCoverImage] = useState('');
+
+  useEffect(() => {
+    fetchCoverImage(); // Fetch cover image when component mounts
+  }, []);
+
+  const fetchCoverImage = () => {
+    // Construct the API request URL for Google Books API
+    const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=intitle:${Book.Title}&inauthor:${Book.Author}&key=AIzaSyCNoQq_hIMM60Ygb4QFekHL03oaMuxiTGw`;
+
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        // Get the cover image URL from the API response
+        if (response.data.items && response.data.items.length > 0) {
+          const item = response.data.items[0];
+          const coverImageLink = item.volumeInfo.imageLinks?.thumbnail || '';
+          setCoverImage(coverImageLink);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching cover image:', error);
+      });
+  };
 
   const handleSend = (Book) => {
     setIsLoading(true);
@@ -52,6 +77,10 @@ function BookRow({ Book, email }) {
 
   return (
     <Tr>
+      <Td>
+        {/* Render the cover image */}
+        {coverImage && <Image src={coverImage} alt="Cover" />}
+      </Td>
       <Td>{Book.Author}</Td>
       <Td>{Book.Title}</Td>
       <Td>{Book.Publisher}</Td>

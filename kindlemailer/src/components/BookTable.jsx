@@ -22,6 +22,7 @@ function BookTable({ Books, email }) {
       <Table variant="simple" colorScheme="light-grey">
         <Thead>
           <Tr>
+              <Th className='empty-cell'></Th>
               <Th>Author</Th>
               <Th>Title</Th>
               <Th>Publisher</Th>
