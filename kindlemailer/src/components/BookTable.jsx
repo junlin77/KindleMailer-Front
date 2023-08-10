@@ -29,6 +29,7 @@ function BookTable({ Books, email }) {
             <Th>Year</Th>
             <Th>Language</Th>
             <Th>Size</Th>
+            <Th>ISBN</Th>
             <Th>Extension</Th>
             <Th></Th>
           </Tr>

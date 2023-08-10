@@ -8,26 +8,14 @@ import {
   Grid,
 } from '@chakra-ui/react';
 import { BiBook } from 'react-icons/bi';
-import { AiOutlineCloseCircle, AiOutlineUser, AiOutlineFile, AiOutlineMail } from 'react-icons/ai';
-import { TbBuilding, TbLanguageKatakana } from 'react-icons/tb';
-import { SlCalender } from 'react-icons/sl';
+import { AiOutlineCloseCircle, AiOutlineMail } from 'react-icons/ai';
 import axios from 'axios';
 import '../styles/SearchBar.css';
 
 function SearchBar({ setSearchResults, setEmail, userProfile }) {
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [extension, setExtension] = useState('');
-  const [publisher, setPublisher] = useState('');
-  const [year, setYear] = useState('');
-  const [language, setLanguage] = useState('');
+  const [search, setSearch] = useState('');
   
-  const [showTitleClearIcon, setShowTitleClearIcon] = useState(false);
-  const [showAuthorClearIcon, setShowAuthorClearIcon] = useState(false);
-  const [showExtensionClearIcon, setShowExtensionClearIcon] = useState(false);
-  const [showPublisherClearIcon, setShowPublisherClearIcon] = useState(false);
-  const [showYearClearIcon, setShowYearClearIcon] = useState(false);
-  const [showLanguageClearIcon, setShowLanguageClearIcon] = useState(false);
+  const [showSearchClearIcon, setShowSearchClearIcon] = useState(false);
 
   // Update email state in parent - FilterableBookTable component
   const handleEmailChange = (event) => {
@@ -38,29 +26,9 @@ function SearchBar({ setSearchResults, setEmail, userProfile }) {
   // Clear input field and hide clear icon
   const handleClear = (field) => {
     switch (field) {
-      case 'title':
-        setTitle('');
-        setShowTitleClearIcon(false);
-        break;
-      case 'author':
-        setAuthor('');
-        setShowAuthorClearIcon(false);
-        break;
-      case 'extension':
-        setExtension('');
-        setShowExtensionClearIcon(false);
-        break;
-      case 'publisher':
-        setPublisher('');
-        setShowPublisherClearIcon(false);
-        break;
-      case 'year':
-        setYear('');
-        setShowYearClearIcon(false);
-        break;
-      case 'language':
-        setLanguage('');
-        setShowLanguageClearIcon(false);
+      case 'search':
+        setSearch('');
+        setShowSearchClearIcon(false);
         break;
       default:
         break;
@@ -73,22 +41,18 @@ function SearchBar({ setSearchResults, setEmail, userProfile }) {
     axios
       .get(apiUrl, {
         params: {
-          title,
-          author,
-          extension,
-          publisher,
-          year,
-          language,
+          search,
         },
       })
       .then((response) => {
         // If API call successful, update searchResults state in parent - FilterableBookTable component
         setSearchResults(response.data);
+        console.log(response.data)
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-  }, [title, author, extension, publisher, year, language]); // Trigger API whenever these variables change
+  }, [search]); // Trigger API whenever these variables change
 
   return (
     <FormControl className='form'>
@@ -105,122 +69,21 @@ function SearchBar({ setSearchResults, setEmail, userProfile }) {
           <Input
             variant='outline'
             type='text'
-            placeholder='Title'
-            value={title}
+            placeholder='Title, Author, or ISBN'
+            value={search}
             onChange={(e) => {
-              setTitle(e.target.value);
-              setShowTitleClearIcon(!!e.target.value);
+              setSearch(e.target.value);
+              setShowSearchClearIcon(!!e.target.value);
             }}
           />
-          {showTitleClearIcon && (
-            <InputRightElement onClick={() => handleClear('title')}>
-              <AiOutlineCloseCircle />
-            </InputRightElement>
-          )}
-        </InputGroup>
-        <InputGroup>
-          <InputLeftElement pointerEvents='none'>
-            <AiOutlineUser />
-          </InputLeftElement>
-          <Input
-            variant='outline'
-            type='text'
-            placeholder='Author'
-            value={author}
-            onChange={(e) => {
-              setAuthor(e.target.value)
-              setShowAuthorClearIcon(!!e.target.value);
-            }}
-          />
-          {showAuthorClearIcon && (
-            <InputRightElement onClick={() => handleClear('author')}>
-              <AiOutlineCloseCircle />
-            </InputRightElement>
-          )}
-        </InputGroup>
-        <InputGroup>
-          <InputLeftElement pointerEvents='none'>
-            <AiOutlineFile />
-          </InputLeftElement>
-          <Input
-            variant='outline'
-            type='text'
-            placeholder='Extension'
-            value={extension}
-            onChange={(e) => {
-              setExtension(e.target.value)
-              setShowExtensionClearIcon(!!e.target.value);
-            }}
-          />
-          {showExtensionClearIcon && (
-            <InputRightElement onClick={() => handleClear('extension')}>
+          {showSearchClearIcon && (
+            <InputRightElement onClick={() => handleClear('search')}>
               <AiOutlineCloseCircle />
             </InputRightElement>
           )}
         </InputGroup>
         {userProfile ? (
-          <>
-            <InputGroup>
-              <InputLeftElement pointerEvents='none'>
-                <TbBuilding />
-              </InputLeftElement>
-              <Input
-                variant='outline'
-                type='text'
-                placeholder='Publisher'
-                value={publisher}
-                onChange={(e) => {
-                  setPublisher(e.target.value);
-                  setShowPublisherClearIcon(!!e.target.value);
-                }}
-              />
-              {showPublisherClearIcon && (
-                <InputRightElement onClick={() => handleClear('publisher')}>
-                  <AiOutlineCloseCircle />
-                </InputRightElement>
-              )}
-            </InputGroup>
-            <InputGroup>
-              <InputLeftElement pointerEvents='none'>
-                <SlCalender />
-              </InputLeftElement>
-              <Input
-                variant='outline'
-                type='text'
-                placeholder='Year'
-                value={year}
-                onChange={(e) => {
-                  setYear(e.target.value);
-                  setShowYearClearIcon(!!e.target.value);
-                }}
-              />
-              {showYearClearIcon && (
-                <InputRightElement onClick={() => handleClear('year')}>
-                  <AiOutlineCloseCircle />
-                </InputRightElement>
-              )}
-            </InputGroup>
-            <InputGroup>
-              <InputLeftElement pointerEvents='none'>
-                <TbLanguageKatakana />
-              </InputLeftElement>
-              <Input
-                variant='outline'
-                type='text'
-                placeholder='Language'
-                value={language}
-                onChange={(e) => {
-                  setLanguage(e.target.value);
-                  setShowLanguageClearIcon(!!e.target.value);
-                }}
-              />
-              {showLanguageClearIcon && (
-                <InputRightElement onClick={() => handleClear('language')}>
-                  <AiOutlineCloseCircle />
-                </InputRightElement>
-              )}
-            </InputGroup>
-          </>
+          <></>
         ) : (
           <InputGroup>
             <InputLeftElement pointerEvents='none'>

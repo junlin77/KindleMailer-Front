@@ -21,7 +21,7 @@ function BookRow({ Book, email }) {
 
   const fetchCoverImage = () => {
     // Construct the API request URL for Google Books API
-    const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=intitle:${Book.Title}&inauthor:${Book.Author}&key=AIzaSyCNoQq_hIMM60Ygb4QFekHL03oaMuxiTGw`;
+    const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${Book.isbn}&key=AIzaSyCNoQq_hIMM60Ygb4QFekHL03oaMuxiTGw`;
 
     axios
       .get(apiUrl)
@@ -81,13 +81,14 @@ function BookRow({ Book, email }) {
         {/* Render the cover image */}
         {coverImage && <Image src={coverImage} alt="Cover" />}
       </Td>
-      <Td>{Book.Author}</Td>
-      <Td>{Book.Title}</Td>
-      <Td>{Book.Publisher}</Td>
-      <Td>{Book.Year}</Td>
-      <Td>{Book.Language}</Td>
-      <Td>{Book.Size}</Td>
-      <Td>{Book.Extension}</Td>
+      <Td>{Book.author}</Td>
+      <Td>{Book.title}</Td>
+      <Td>{Book.publisher}</Td>
+      <Td>{Book.year}</Td>
+      <Td>{Book.language}</Td>
+      <Td>{Book.filesize}</Td>
+      <Td>{Book.isbn}</Td>
+      <Td>{Book.extension}</Td>
       <Td>
         {isLoading ? (
           <Flex justify="center" align="center">
