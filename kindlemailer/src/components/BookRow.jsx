@@ -19,9 +19,11 @@ function BookRow({ Book, email }) {
     fetchCoverImage(); // Fetch cover image when component mounts
   }, []);
 
+  const apiKey = import.meta.env.VITE_API_KEY;
+
   const fetchCoverImage = () => {
     // Construct the API request URL for Google Books API
-    const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${Book.isbn}&key=AIzaSyCNoQq_hIMM60Ygb4QFekHL03oaMuxiTGw`;
+    const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${Book.isbn}&key=${apiKey}`;
 
     axios
       .get(apiUrl)
