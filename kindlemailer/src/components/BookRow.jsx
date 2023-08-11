@@ -7,6 +7,14 @@ import {
   Spinner,
   Flex,
   Image,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { BsSend } from 'react-icons/bs';
 import Swal from 'sweetalert2';
@@ -14,6 +22,7 @@ import Swal from 'sweetalert2';
 function BookRow({ Book, email }) {
   const [isLoading, setIsLoading] = useState(false);
   const [coverImage, setCoverImage] = useState('');
+  const [details, setDetails] = useState(null);
 
   // Reset cover image when a new search result is received
   useEffect(() => {
@@ -42,6 +51,24 @@ function BookRow({ Book, email }) {
       })
       .catch((error) => {
         console.error('Error fetching cover image:', error);
+      });
+  };
+
+  const fetchDetails = () => {
+    // Construct the API request URL for your API
+    const apiUrl = 'http://127.0.0.1:8000/api/Details/?';
+    const json_data = {
+      id: Book.id, 
+      source: Book.source,
+    };
+
+    axios
+      .post(apiUrl, json_data)
+      .then((response) => {
+        setDetails(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching book details:', error);
       });
   };
 
@@ -82,11 +109,55 @@ function BookRow({ Book, email }) {
       });
   };
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  useEffect(() => {
+    if (isOpen) {
+      fetchDetails();
+    }
+  }, [isOpen]);
+
   return (
-    <Tr>
+    <Tr onClick={onOpen}>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Book Details</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {details && (
+              <div>
+                {coverImage && <Image src={coverImage} alt="Cover" />}
+                <p>Author: {details.author}</p>
+                <p>Title: {details.title}</p>
+                <p>Filesize: {details.filesize}</p>
+                <p>ISBN: {details.isbn}</p>
+                <p>Extension: {details.extension}</p>
+                <p>IPFS: {details.ipfs_cid}</p>
+                <p>Source: {details.source}</p>
+              </div>
+            )}
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+            {isLoading ? (
+              <Flex justify="center" align="center">
+                <Spinner size="md" color="blue.500" />
+              </Flex>
+            ) : (
+              <Button onClick={() => handleSend(Book)}>
+                <BsSend /> Send to Kindle
+              </Button>
+            )}
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
       <Td>
         {/* Render the cover image */}
-        {coverImage && <Image src={coverImage} alt="Cover" />}
+        {coverImage && <Image src={coverImage} alt="Cover"/>}
       </Td>
       <Td>{Book.author}</Td>
       <Td>{Book.title}</Td>
@@ -96,17 +167,6 @@ function BookRow({ Book, email }) {
       <Td>{Book.filesize}</Td>
       <Td>{Book.isbn}</Td>
       <Td>{Book.extension}</Td>
-      <Td>
-        {isLoading ? (
-          <Flex justify="center" align="center">
-            <Spinner size="md" color="blue.500" />
-          </Flex>
-        ) : (
-          <Button onClick={() => handleSend(Book)}>
-            <BsSend />
-          </Button>
-        )}
-      </Td>
     </Tr>
   );
 }

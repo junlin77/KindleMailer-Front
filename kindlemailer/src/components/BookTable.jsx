@@ -31,7 +31,6 @@ function BookTable({ Books, email }) {
             <Th>Size</Th>
             <Th>ISBN</Th>
             <Th>Extension</Th>
-            <Th></Th>
           </Tr>
         </Thead>
         <Tbody className='table-body'>
