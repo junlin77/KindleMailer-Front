@@ -15,6 +15,11 @@ function BookRow({ Book, email }) {
   const [isLoading, setIsLoading] = useState(false);
   const [coverImage, setCoverImage] = useState('');
 
+  // Reset cover image when a new search result is received
+  useEffect(() => {
+    setCoverImage('');
+  }, [Book]); // Listen for changes in the Book prop
+
   useEffect(() => {
     fetchCoverImage(); // Fetch cover image when component mounts
   }, []);
