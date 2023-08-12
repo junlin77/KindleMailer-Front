@@ -8,22 +8,23 @@ This project is an extension/enhancement of the other repository - LibgenEmailer
 
 # Demo
 
-## Searching books
+## Searching Books Using Filters (Title, Author, Extension)
 ![](https://github.com/junlin77/KindleMailer-Front/blob/main/search_not_login.gif)
 
-## Input email for receiving books and trigger send
+## Enter Email for Book Delivery and Trigger Sending
 ![](https://github.com/junlin77/KindleMailer-Front/blob/main/input_email_not_login.gif)
 
-## Book sent notification
+## Book Sent Notification
 ![](https://github.com/junlin77/KindleMailer-Front/blob/main/download_book_not_login.gif)
 
-## Login with Google unlock more search filters and kindle email saving functions
+## Login with Google Account
 ![](https://github.com/junlin77/KindleMailer-Front/blob/main/login.gif)
 
+## Unlock Additional Search Filters (Publishers, Year, Language) After Logging In
 ![](https://github.com/junlin77/KindleMailer-Front/blob/main/search_filters_logged_in.gif)
 
-## Updating kindle email
+## Updating Kindle Email for Logged-In Users
 ![](https://github.com/junlin77/KindleMailer-Front/blob/main/update_kindle_email.gif)
 
-## Change between dark and light mode
+## Toggle Between Dark and Light Mode
 ![](https://github.com/junlin77/KindleMailer-Front/blob/main/dark_mode_toggle.gif)
