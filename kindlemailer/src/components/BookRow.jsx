@@ -25,10 +25,10 @@ function BookRow({ Book, email }) {
   const [coverImage, setCoverImage] = useState('');
   const [details, setDetails] = useState(null);
 
-  // Reset cover image when a new search result is received
   useEffect(() => {
-    setCoverImage('');
-  }, [Book]); // Listen for changes in the Book prop
+    console.log('Book prop changed:', Book);
+    fetchCoverImage(); // Fetch cover image when Book prop changes
+  }, [Book]);
 
   useEffect(() => {
     fetchCoverImage(); // Fetch cover image when component mounts
@@ -39,7 +39,7 @@ function BookRow({ Book, email }) {
     const coverValue = Book.isbn; 
   
     // Construct the API request URL for Open Library Covers API
-    const apiUrl = `https://covers.openlibrary.org/b/${coverId}/${coverValue}-L.jpg`;
+    const apiUrl = `https://covers.openlibrary.org/b/${coverId}/${coverValue}-M.jpg`;
   
     setCoverImage(apiUrl);
   };  
