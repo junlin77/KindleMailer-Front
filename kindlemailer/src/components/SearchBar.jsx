@@ -29,6 +29,7 @@ function SearchBar({ setSearchResults, setEmail, userProfile }) {
       case 'search':
         setSearch('');
         setShowSearchClearIcon(false);
+        setSearchResults([])
         break;
       default:
         break;
