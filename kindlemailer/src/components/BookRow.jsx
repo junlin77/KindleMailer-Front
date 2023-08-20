@@ -68,8 +68,10 @@ function BookRow({ Book, email }) {
     setIsLoading(true);
     const apiUrl = `http://127.0.0.1:8000/api/send_to_kindle/`;
     const data = {
-      book_to_download: Book,
+      ipfs_cid: details.ipfs_cid,
       kindle_email: email,
+      title: details.title,
+      extension: details.extension,
     };
 
     axios
@@ -78,14 +80,16 @@ function BookRow({ Book, email }) {
         // The POST request is successful, show the success modal
         console.log('POST request successful:', response);
         setIsLoading(false);
+        onClose();
         Swal.fire({
           icon: 'success',
           title: 'Success',
-          text: '\'' + Book.Title + '\'' + ' sent to ' + '\'' + email + '\'',
+          text: '\'' + details.title + '\'' + ' sent to ' + '\'' + email + '\'',
         });
       })
       .catch((error) => {
         setIsLoading(false);
+        onClose();
         let text = 'Error sending data. Please try again later.';
         if (error.response && error.response.status === 400) {
           console.error("Error:", error.response.data.error);
