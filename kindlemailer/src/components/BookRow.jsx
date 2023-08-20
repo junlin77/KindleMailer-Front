@@ -34,26 +34,15 @@ function BookRow({ Book, email }) {
     fetchCoverImage(); // Fetch cover image when component mounts
   }, []);
 
-  const apiKey = import.meta.env.VITE_API_KEY;
-
   const fetchCoverImage = () => {
-    // Construct the API request URL for Google Books API
-    const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${Book.isbn}&key=${apiKey}`;
-
-    axios
-      .get(apiUrl)
-      .then((response) => {
-        // Get the cover image URL from the API response
-        if (response.data.items && response.data.items.length > 0) {
-          const item = response.data.items[0];
-          const coverImageLink = item.volumeInfo.imageLinks?.thumbnail || '';
-          setCoverImage(coverImageLink);
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching cover image:', error);
-      });
-  };
+    const coverId = 'isbn'; 
+    const coverValue = Book.isbn; 
+  
+    // Construct the API request URL for Open Library Covers API
+    const apiUrl = `https://covers.openlibrary.org/b/${coverId}/${coverValue}-L.jpg`;
+  
+    setCoverImage(apiUrl);
+  };  
 
   const fetchDetails = () => {
     // Construct the API request URL for your API
