@@ -56,14 +56,14 @@ function BookRow({ Book, email }) {
 
   const fetchDetails = () => {
     // Construct the API request URL for your API
-    const apiUrl = 'http://127.0.0.1:8000/api/Details/?';
-    const json_data = {
+    const apiUrl = 'http://127.0.0.1:8000/api/details/';
+    const params = {
       id: Book.id, 
       source: Book.source,
     };
 
     axios
-      .post(apiUrl, json_data)
+      .post(apiUrl, params)
       .then((response) => {
         setDetails(response.data);
       })
@@ -148,7 +148,7 @@ function BookRow({ Book, email }) {
               </Flex>
             ) : (
               <Button onClick={() => handleSend(Book)}>
-                <BsSend /> Send to Kindle
+                <BsSend />  Send to Kindle
               </Button>
             )}
           </ModalFooter>
