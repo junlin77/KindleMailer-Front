@@ -18,6 +18,7 @@ import {
 } from '@chakra-ui/react';
 import { BsSend } from 'react-icons/bs';
 import Swal from 'sweetalert2';
+import '../styles/BookRow.css';
 
 function BookRow({ Book, email }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -60,6 +61,8 @@ function BookRow({ Book, email }) {
     const params = {
       id: Book.id, 
       source: Book.source,
+      pages: Book.pages,
+
     };
 
     axios
@@ -125,17 +128,20 @@ function BookRow({ Book, email }) {
           <ModalHeader>Book Details</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {details && (
-              <div>
+            {details ? (
+              <div className='details-container'>
                 {coverImage && <Image src={coverImage} alt="Cover" />}
-                <p>Author: {details.author}</p>
-                <p>Title: {details.title}</p>
-                <p>Filesize: {details.filesize}</p>
-                <p>ISBN: {details.isbn}</p>
-                <p>Extension: {details.extension}</p>
-                <p>IPFS: {details.ipfs_cid}</p>
-                <p>Source: {details.source}</p>
+                <div className='details-text'>
+                  <p>Author: {details.author}</p>
+                  <p>Title: {details.title}</p>
+                  <p>Filesize: {details.filesize}</p>
+                  <p>ISBN: {details.isbn}</p>
+                  <p>Extension: {details.extension}</p>
+                  <p>Source: {details.source}</p>
+                </div>
               </div>
+            ) : (
+              <p>Currently unavailable</p>
             )}
           </ModalBody>
           <ModalFooter>
