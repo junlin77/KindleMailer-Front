@@ -4,9 +4,16 @@ import Footer from './components/Footer';
 import FilterableBookTable from './components/FilterableBookTable';
 import './App.css';
 import BackToTopButton from './components/BackToTopButton';
+import Pagination from './components/Pagination';
 
 export default function App() {
   const [userProfile, setUserProfile] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 10;
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   // Check if user is logged in
   useEffect(() => {
@@ -30,6 +37,11 @@ export default function App() {
         <FilterableBookTable userProfile={userProfile} />
         <BackToTopButton />
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
       <Footer />
     </div>
   );
