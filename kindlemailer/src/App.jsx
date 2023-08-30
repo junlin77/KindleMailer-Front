@@ -34,7 +34,7 @@ export default function App() {
     <div className="app-container">
       <Header userProfile={userProfile} setUserProfile={handleUserProfileUpdate} />
       <div>
-        <FilterableBookTable userProfile={userProfile} />
+        <FilterableBookTable userProfile={userProfile} currentPage={currentPage}/>
         <BackToTopButton />
       </div>
       <Pagination

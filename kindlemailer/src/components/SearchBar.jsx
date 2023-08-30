@@ -12,8 +12,9 @@ import { AiOutlineCloseCircle, AiOutlineMail } from 'react-icons/ai';
 import axios from 'axios';
 import '../styles/SearchBar.css';
 
-function SearchBar({ setSearchResults, setEmail, userProfile }) {
+function SearchBar({ setSearchResults, setEmail, userProfile, currentPage }) {
   const [search, setSearch] = useState('');
+  // const [currentPage, setCurrentPage] = useState(1); // Add currentPage state
   
   const [showSearchClearIcon, setShowSearchClearIcon] = useState(false);
 
@@ -43,6 +44,7 @@ function SearchBar({ setSearchResults, setEmail, userProfile }) {
       .get(apiUrl, {
         params: {
           search,
+          page: currentPage,
         },
       })
       .then((response) => {
@@ -53,7 +55,7 @@ function SearchBar({ setSearchResults, setEmail, userProfile }) {
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-  }, [search]); // Trigger API whenever these variables change
+  }, [search, currentPage]); // Trigger API whenever these variables change
 
   return (
     <FormControl className='form'>
