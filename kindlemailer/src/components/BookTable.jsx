@@ -36,7 +36,7 @@ function BookTable({ Books, email }) {
         <Tbody className='table-body'>
           {Books.length === 0 ? (
             <Tr className='no-data-row'>
-              <Td colSpan='8' textAlign='center'>No data</Td>
+              <Td colSpan='10' textAlign='center'>No data</Td>
             </Tr>
           ) : (
             Books.map((Book) => (
