@@ -30,6 +30,7 @@
     height: 35px;
     border-radius: 50%;
     object-fit: cover;
+    margin-right: 5px; 
 }
 
 .profile-icon-container {
@@ -37,16 +38,38 @@
     align-items: center;
 }
 
-.profile-picture {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 5px; 
-}
-
 .chevron-icon {
     font-size: 16px; 
 }
   
+@media (max-width: 768px) {
+    .header {
+        margin: 10px 20px 0 20px;
+    }
+    .header-text h5 {
+        font-weight: bold;
+        font-size: medium;
+    }
+    
+    .header-text p {
+        font-size: x-small;
+    }
+    
+    .header-controls {
+        gap: 3px;
+    }
+
+    .user-profile {
+        width: 30px;
+    }
+
+    .profile-picture {
+        width: 25px;
+        height: 25px;
+    }
+
+    .chevron-icon {
+        font-size: 10px; 
+    }
+}
   
