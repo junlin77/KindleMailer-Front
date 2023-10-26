@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Menu, MenuButton, MenuList, MenuItem, Input, FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import Swal from 'sweetalert2';
+import { BiLogoGoogle } from 'react-icons/bi';
 
 const Header = ({ userProfile, setUserProfile }) => {
   const [isModalOpen, setIsModalOpen] = useState(false); 
@@ -179,7 +180,7 @@ const Header = ({ userProfile, setUserProfile }) => {
           </div>
         ) : (
           <Button variant='ghost' onClick={login} className="header-button">
-            Sign in with Google 🚀
+            <BiLogoGoogle />
           </Button>
         )}
       </div>

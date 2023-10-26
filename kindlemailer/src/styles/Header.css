@@ -56,7 +56,7 @@
     }
     
     .header-controls {
-        gap: 3px;
+        gap: 0px;
     }
 
     .user-profile {
@@ -71,5 +71,6 @@
     .chevron-icon {
         font-size: 10px; 
     }
+    
 }
   
