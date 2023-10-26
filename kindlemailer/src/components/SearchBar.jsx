@@ -60,7 +60,7 @@ function SearchBar({ setSearchResults, setEmail, userProfile, currentPage }) {
   return (
     <FormControl className='form'>
       <Grid
-        templateColumns={userProfile ? "repeat(3, 1fr)" : "repeat(4, 1fr)"}
+        className='search-bar'
         gap={3}
         align="center"
         width = "100%"
